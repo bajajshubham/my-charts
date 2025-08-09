@@ -72,3 +72,5 @@ export default tseslint.config([
 - Component Unmount clear the interval 
 - Data Overflow: If it runs a long time, the data array could grow very large. Consider limiting to e.g. last 100 data points or implement virtualization.
 - Pause then Start: When restarting after pause, continue data indexing correctly.
+- data point outside the range
+- data validation - improper data like [5,,2,3]

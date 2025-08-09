@@ -22,6 +22,7 @@ const DataRecorder: React.FC = () => {
       intervalRef.current = setInterval(() => {
         setData(prev => {
           return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+          // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
       }, 5000)
     }
