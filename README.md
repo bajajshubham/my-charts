@@ -68,9 +68,14 @@ export default tseslint.config([
 ])
 ```
 ## Edge cases
-- Multiple Clicks on Start will create multiple intervals stacking up- Start only if not already recording
-- Component Unmount clear the interval 
-- Data Overflow: If it runs a long time, the data array could grow very large. Consider limiting to e.g. last 100 data points or implement virtualization.
-- Pause then Start: When restarting after pause, continue data indexing correctly.
-- data point outside the range
-- data validation - improper data like [5,,2,3]
+- Multiple Clicks on Start will create multiple intervals stacking up- Start only if not already recording (handled)
+- Component Unmount clear the interval (handled)
+- Data Overflow: If it runs a long time, the data array could grow very large. - x axis
+- Pause then Start: When restarting after pause, continue data indexing correctly. (handled)
+- data point outside the range - y axis (handled)
+- data validation - improper data like [5,,2,3] (handled)
+
+## additional features
+- dynamic tick interval
+- dynamic x axis max intervals in view
+- 

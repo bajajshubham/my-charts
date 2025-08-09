@@ -24,7 +24,7 @@ const DataRecorder: React.FC = () => {
           return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
           // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
-      }, 5000)
+      }, 1000)
     }
   }
 
@@ -53,7 +53,7 @@ const DataRecorder: React.FC = () => {
         <LineChart dataset={data} />
         <div className="flex gap-2 mt-10 justify-end">
           <Button onClick={startRecording} disabled={isRecording} className="cursor-pointer bg-blue-500" >Start</Button>
-          <Button onClick={stopRecording} disabled={!isRecording} className="cursor-pointer bg-red-300" >Stop</Button>
+          <Button onClick={stopRecording} disabled={!isRecording} className="cursor-pointer bg-red-500" >Pause</Button>
         </div>
       </div>
     </div>

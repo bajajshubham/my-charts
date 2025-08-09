@@ -9,7 +9,11 @@ type DataPoint = {
 const LineChart = ({ dataset }: { dataset: DataPoint[] }) => {
   const options = {
     chart: {
-      type: 'line'
+      type: 'line',
+       scrollablePlotArea: {
+        minWidth: 1440,
+        scrollPositionX: 1
+      }
     },
     title: {
       text: 'Just random data overtime'
@@ -17,6 +21,7 @@ const LineChart = ({ dataset }: { dataset: DataPoint[] }) => {
     xAxis: {
       title: { text: "Time (seconds)" },
       tickInterval: 5,
+      tickPixelInterval: 50
     },
     yAxis: {
       title: { text: "Value" },
