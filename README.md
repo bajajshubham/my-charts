@@ -67,3 +67,8 @@ export default tseslint.config([
   },
 ])
 ```
+## Edge cases
+- Multiple Clicks on Start will create multiple intervals stacking up- Start only if not already recording
+- Component Unmount clear the interval 
+- Data Overflow: If it runs a long time, the data array could grow very large. Consider limiting to e.g. last 100 data points or implement virtualization.
+- Pause then Start: When restarting after pause, continue data indexing correctly.

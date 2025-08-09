@@ -10,18 +10,29 @@ type DataPoint = {
 const DataRecorder: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([])
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [isRecording, setIsRecording] = useState(false);
 
 
   const startRecording = () => {
-    intervalRef.current = setInterval(() => {
-      setData(prev => {
-        return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
-      })
-    }, 5000)
+    if (isRecording) return;
+
+    else {
+      setIsRecording(true);
+
+      intervalRef.current = setInterval(() => {
+        setData(prev => {
+          return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+        })
+      }, 5000)
+    }
   }
 
   const stopRecording = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current)
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+    setIsRecording(false)
   }
 
   useEffect(() => {
@@ -40,8 +51,8 @@ const DataRecorder: React.FC = () => {
       <div className="flex flex-col mt-20">
         <LineChart dataset={data} />
         <div className="flex gap-2 mt-10 justify-end">
-          <Button onClick={startRecording}>Start</Button>
-          <Button onClick={stopRecording}>Stop</Button>
+          <Button onClick={startRecording} disabled={isRecording} className="cursor-pointer bg-blue-500" >Start</Button>
+          <Button onClick={stopRecording} disabled={!isRecording} className="cursor-pointer bg-red-300" >Stop</Button>
         </div>
       </div>
     </div>
