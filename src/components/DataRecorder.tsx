@@ -15,13 +15,16 @@ const DataRecorder: React.FC = () => {
       setData(prev => {
         return [{ x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
       })
-      console.log(data)
     }, 5000)
   }
 
   const stopRecording = () => {
     if (intervalRef.current) clearInterval(intervalRef.current)
   }
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   useEffect(() => {
     return () => {
