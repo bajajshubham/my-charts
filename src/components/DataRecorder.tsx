@@ -36,7 +36,7 @@ const DataRecorder: React.FC = () => {
   return (
     <>
       <h1>DataRecorder</h1>
-      <LineChart />
+      <LineChart dataset={data} />
       <button className="text-amber-100" onClick={startRecording}>start</button>
       <button className="text-amber-100" onClick={stopRecording}>stop</button>
     </>
