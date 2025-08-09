@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import LineChart from "./charts/lineChart"
 
 type DataPoint = {
   x: number
@@ -34,7 +35,8 @@ const DataRecorder: React.FC = () => {
 
   return (
     <>
-      <div>DataRecorder</div>
+      <h1>DataRecorder</h1>
+      <LineChart />
       <button className="text-amber-100" onClick={startRecording}>start</button>
       <button className="text-amber-100" onClick={stopRecording}>stop</button>
     </>
