@@ -8,7 +8,7 @@ type DataPoint = {
 }
 
 const DataRecorder: React.FC = () => {
-  const [data, setData] = useState<DataPoint[]>([])
+  const [data, setData] = useState<DataPoint[]>([{ x: 0, y: 0 }])
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isRecording, setIsRecording] = useState(false);
 
