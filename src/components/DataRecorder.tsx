@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
-import LineChart from "./charts/lineChart"
+import LineChart from "@/components/charts/LineChart"
+import { Button } from "@/components/ui/button"
 
 type DataPoint = {
   x: number
@@ -34,12 +35,16 @@ const DataRecorder: React.FC = () => {
   }, [])
 
   return (
-    <>
-      <h1>DataRecorder</h1>
-      <LineChart dataset={data} />
-      <button className="text-amber-100" onClick={startRecording}>start</button>
-      <button className="text-amber-100" onClick={stopRecording}>stop</button>
-    </>
+    <div className="flex flex-col">
+      <h1 className="text-5xl m-2">Random <span className="line-through">Thoughts</span> Data Generator</h1>
+      <div className="flex flex-col mt-20">
+        <LineChart dataset={data} />
+        <div className="flex gap-2 mt-10 justify-end">
+          <Button onClick={startRecording}>Start</Button>
+          <Button onClick={stopRecording}>Stop</Button>
+        </div>
+      </div>
+    </div>
   )
 }
 

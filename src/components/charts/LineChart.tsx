@@ -32,7 +32,7 @@ const LineChart = ({ dataset }: { dataset: DataPoint[] }) => {
   };
 
   return (
-    <div className="w-full h-[400px]"><HighchartsReact highcharts={Highcharts} options={options} /></div>
+    <div className="w-full h-auto"><HighchartsReact highcharts={Highcharts} options={options} /></div>
   )
 }
 
