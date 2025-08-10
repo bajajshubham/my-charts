@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import LineChart from "@/components/charts/LineChart"
 import { Button } from "@/components/ui/button"
+import { Disc } from "lucide-react"
 
 type DataPoint = {
   x: number
@@ -51,7 +52,8 @@ const DataRecorder: React.FC = () => {
       <h1 className="text-5xl m-2">Random <span className="line-through">Thoughts</span> Data Generator</h1>
       <div className="flex flex-col mt-20">
         <LineChart dataset={data} />
-        <div className="flex gap-2 mt-10 justify-end">
+        <div className="flex gap-2 mt-10 justify-end items-center">
+          <Disc color="red" className={isRecording ? 'Blink' : ""} />
           <Button onClick={startRecording} disabled={isRecording} className="cursor-pointer bg-blue-500" >Start</Button>
           <Button onClick={stopRecording} disabled={!isRecording} className="cursor-pointer bg-red-500" >Pause</Button>
         </div>
