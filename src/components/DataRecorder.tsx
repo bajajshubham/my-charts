@@ -11,6 +11,7 @@ type DataPoint = {
 const DataRecorder: React.FC = () => {
   const [dataset1, setDataset1] = useState<DataPoint[]>([{ x: 0, y: 0 }])
   const [dataset2, setDataset2] = useState<DataPoint[]>([{ x: 0, y: 0 }])
+  const [dataset3, setDataset3] = useState<DataPoint[]>([{ x: 0, y: 0 }])
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isRecording, setIsRecording] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
@@ -29,6 +30,10 @@ const DataRecorder: React.FC = () => {
           // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
         setDataset2(prev => {
+          return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+          // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+        })
+        setDataset3(prev => {
           return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
           // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
@@ -52,12 +57,15 @@ const DataRecorder: React.FC = () => {
     setIsRecording(false)
     setHasStarted(false)
     setDataset1([{ x: 0, y: 0 }])
+    setDataset2([{ x: 0, y: 0 }])
+    setDataset3([{ x: 0, y: 0 }])
   }
 
   useEffect(() => {
     console.log("Dataset 1: ", dataset1)
     console.log("Dataset 2: ", dataset2)
-  }, [dataset1, dataset2])
+    console.log("Dataset 3: ", dataset3)
+  }, [dataset1, dataset2, dataset3])
 
   useEffect(() => {
     return () => {
@@ -70,7 +78,7 @@ const DataRecorder: React.FC = () => {
       <h1 className="text-5xl m-2">Random Data Generator</h1>
       <p className="text-2x1 m-1">Generate random numeric data between 0 to 100</p>
       <div className="flex flex-col mt-20">
-        <Chart dataset1={dataset1} dataset2={dataset2} />
+        <Chart dataset1={dataset1} dataset2={dataset2} dataset3={dataset3} />
         <div className="flex gap-2 mt-10 justify-end items-center">
           {hasStarted && <Disc color="red" className={isRecording ? 'Blink' : ""} />}
           <Button onClick={startRecording} disabled={isRecording} className="cursor-pointer bg-blue-500" >Start</Button>
