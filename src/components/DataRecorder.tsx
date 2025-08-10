@@ -2,6 +2,13 @@ import React, { useEffect, useRef, useState } from "react"
 import Chart from "@/components/charts/Chart"
 import { Button } from "@/components/ui/button"
 import { Disc } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 type DataPoint = {
   x: number
@@ -15,6 +22,7 @@ const DataRecorder: React.FC = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isRecording, setIsRecording] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [timeInterval, setTimeInterval] = useState(5)
 
 
   const startRecording = () => {
@@ -37,7 +45,7 @@ const DataRecorder: React.FC = () => {
           return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
           // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
-      }, 1000)
+      }, (timeInterval * 1000))
     }
   }
 
@@ -61,7 +69,12 @@ const DataRecorder: React.FC = () => {
     setDataset3([{ x: 0, y: 0 }])
   }
 
-  useEffect(() => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valueInt = parseInt(e.target.value) < 1 ? 1 : parseInt(e.target.value)
+    setTimeInterval(valueInt)
+  }
+
+  useEffect(() => { //only for development purpose
     console.log("Dataset 1: ", dataset1)
     console.log("Dataset 2: ", dataset2)
     console.log("Dataset 3: ", dataset3)
@@ -78,6 +91,17 @@ const DataRecorder: React.FC = () => {
       <h1 className="text-5xl m-2">Random Data Generator</h1>
       <p className="text-2x1 m-1">Generate random numeric data between 0 to 100</p>
       <div className="flex flex-col mt-20">
+        <div className="m-1 grid w-full max-w-sm items-center gap-3">
+          <Tooltip>
+            <TooltipTrigger>
+              <Label htmlFor="timer" className="mb-2">Interval (seconds)</Label>
+              <Input type="number" id="timer" placeholder="Interval in between data generation" disabled={isRecording} value={timeInterval} onChange={handleTimeChange} />
+            </TooltipTrigger>
+            {isRecording && <TooltipContent>
+              <p>Pause recording to edit</p>
+            </TooltipContent>}
+          </Tooltip>
+        </div>
         <Chart dataset1={dataset1} dataset2={dataset2} dataset3={dataset3} />
         <div className="flex gap-2 mt-10 justify-end items-center">
           {hasStarted && <Disc color="red" className={isRecording ? 'Blink' : ""} />}
