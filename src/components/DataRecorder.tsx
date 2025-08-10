@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import LineChart from "@/components/charts/LineChart"
+import Chart from "@/components/charts/Chart"
 import { Button } from "@/components/ui/button"
 import { Disc } from "lucide-react"
 
@@ -9,9 +9,11 @@ type DataPoint = {
 }
 
 const DataRecorder: React.FC = () => {
-  const [data, setData] = useState<DataPoint[]>([{ x: 0, y: 0 }])
+  const [dataset1, setDataset1] = useState<DataPoint[]>([{ x: 0, y: 0 }])
+  const [dataset2, setDataset2] = useState<DataPoint[]>([{ x: 0, y: 0 }])
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [isRecording, setIsRecording] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
 
 
   const startRecording = () => {
@@ -19,9 +21,14 @@ const DataRecorder: React.FC = () => {
 
     else {
       setIsRecording(true);
+      setHasStarted(true)
 
       intervalRef.current = setInterval(() => {
-        setData(prev => {
+        setDataset1(prev => {
+          return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+          // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
+        })
+        setDataset2(prev => {
           return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
           // return [...prev, { x: prev.length ? prev[prev.length - 1].x + 5 : 0, y: parseFloat((Math.random() * 100).toFixed(2)) }]
         })
@@ -37,9 +44,20 @@ const DataRecorder: React.FC = () => {
     setIsRecording(false)
   }
 
+  const resetRecording = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+    setIsRecording(false)
+    setHasStarted(false)
+    setDataset1([{ x: 0, y: 0 }])
+  }
+
   useEffect(() => {
-    console.log(data)
-  }, [data])
+    console.log("Dataset 1: ", dataset1)
+    console.log("Dataset 2: ", dataset2)
+  }, [dataset1, dataset2])
 
   useEffect(() => {
     return () => {
@@ -49,13 +67,15 @@ const DataRecorder: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-5xl m-2">Random <span className="line-through">Thoughts</span> Data Generator</h1>
+      <h1 className="text-5xl m-2">Random Data Generator</h1>
+      <p className="text-2x1 m-1">Generate random numeric data between 0 to 100</p>
       <div className="flex flex-col mt-20">
-        <LineChart dataset={data} />
+        <Chart dataset1={dataset1} dataset2={dataset2} />
         <div className="flex gap-2 mt-10 justify-end items-center">
-          <Disc color="red" className={isRecording ? 'Blink' : ""} />
+          {hasStarted && <Disc color="red" className={isRecording ? 'Blink' : ""} />}
           <Button onClick={startRecording} disabled={isRecording} className="cursor-pointer bg-blue-500" >Start</Button>
           <Button onClick={stopRecording} disabled={!isRecording} className="cursor-pointer bg-red-500" >Pause</Button>
+          <Button onClick={resetRecording} disabled={!hasStarted} className="cursor-pointer bg-gray-500" >Reset</Button>
         </div>
       </div>
     </div>
